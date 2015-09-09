@@ -21,6 +21,12 @@
         <p>Name: {{user.name}}</p>
         <p>Email: {{user.email}}</p>
         <img ng-src="{{user.avatar_url}}" alt="">
+        <div></div>
+        <select name="" id="" ng-model="repoSortOrder">
+            <option value="+name">Name</option>
+            <option value="+stargazers_count">Stars</option>
+            <option value="+language">Language</option>
+        </select>
         <table>
             <thead>
                 <tr>
@@ -30,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat= "repo in repos | orderBy:'+name'">
+                <tr ng-repeat= "repo in repos | orderBy:repoSortOrder">
                     <td>{{repo.name}}</td>
                     <td>{{repo.stargazers_count | number}}</td>
                     <td>{{repo.language}}</td>
