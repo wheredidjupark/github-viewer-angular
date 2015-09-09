@@ -11,10 +11,13 @@
     <script type="text/javascript" src="app.js"></script>
 </head>
 
-<body ng-controller = "MainController">
-<div>
-    <p>{{user.name}}</p>
-</div>
+<body ng-controller="MainController">
+
+    <div>
+        <p>Name: {{user.name}}</p>
+        <p>Email: {{user.email}}</p>
+        <img ng-src="{{user.avatar_url}}" alt="">
+    </div>
 </body>
 
 </html>
