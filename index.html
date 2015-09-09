@@ -12,7 +12,11 @@
 </head>
 
 <body ng-controller="MainController">
-
+{{username}}
+    <form ng-submit="searchUser(username)">
+        <input type="search" placeholder="Type in Username" ng-model="username" required>
+        <input type="submit">
+    </form>
     <div>
         <p>Name: {{user.name}}</p>
         <p>Email: {{user.email}}</p>
