@@ -12,15 +12,31 @@
 </head>
 
 <body ng-controller="MainController">
-{{username}}
+    {{username}}
     <form ng-submit="searchUser(username)">
         <input type="search" placeholder="Type in Username" ng-model="username" required>
         <input type="submit">
     </form>
-    <div>
+    <div ng-show="user">
         <p>Name: {{user.name}}</p>
         <p>Email: {{user.email}}</p>
         <img ng-src="{{user.avatar_url}}" alt="">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Stars</th>
+                    <th>Language</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat= "repo in repos | orderBy:'+name'">
+                    <td>{{repo.name}}</td>
+                    <td>{{repo.stargazers_count | number}}</td>
+                    <td>{{repo.language}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 
