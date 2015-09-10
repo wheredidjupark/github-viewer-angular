@@ -13,11 +13,13 @@
 
 <body ng-controller="MainController">
     {{username}}
+    <div>{{count}}</div>
     <form ng-submit="searchUser(username)">
         <input type="search" placeholder="Type in Username" ng-model="username" required>
         <input type="submit">
     </form>
-    <div ng-show="user">
+    <!-- <div ng-include="'userDetails.html'"></div> -->
+    <div ng-show="user" id="userDetails">
         <p>Name: {{user.name}}</p>
         <p>Email: {{user.email}}</p>
         <img ng-src="{{user.avatar_url}}" alt="">
@@ -36,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat= "repo in repos | orderBy:repoSortOrder">
+                <tr ng-repeat="repo in repos | orderBy:repoSortOrder">
                     <td>{{repo.name}}</td>
                     <td>{{repo.stargazers_count | number}}</td>
                     <td>{{repo.language}}</td>

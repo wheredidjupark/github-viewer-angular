@@ -1,30 +1,53 @@
 (function() {
 
 
-    var MainController = function($scope, $http, $log) {
+    var MainController = function($scope, $http, $log, $interval, $location, $anchorScroll) {
+
         var onUser = function(response) {
             $scope.user = response.data;
-            //console.log(response);
-            $http.get("https://api.github.com/users/"+$scope.username+"/repos").then(onRepos);
+            $http.get("https://api.github.com/users/" + $scope.username + "/repos").then(onRepos);
         };
 
-        var onRepos = function(response){
+        var onRepos = function(response) {
             $scope.repos = response.data;
+            $location.hash("userDetails");
+            $anchorScroll();
         };
-        var onError = function(response){
+        var onError = function(response) {
             $scope.error = response;
-            //console.log($scope.error.data.message);
         };
 
-        $scope.searchUser = function(username){
-            $log.log(username);
-            $http.get("https://api.github.com/users/"+username).then(onUser, onError);
+        var decrementCount = function() {
+            $scope.count--;
+            if ($scope.count < 1) {
+                $scope.searchUser($scope.username);
+            }
         };
+
+
+        var countdownInterval = null; //it will store the return promise of the $interval
+        var countdown = function() {
+            countdownInterval = $interval(decrementCount, 1000, $scope.count); //run until the promise is resolved. The promise is resolve when the countdown reaches 
+        };
+
+        $scope.searchUser = function(username) {
+            $log.log(username);
+            $http.get("https://api.github.com/users/" + username).then(onUser, onError);
+            if (countdownInterval) {
+                $interval.cancel(countdownInterval);
+            }
+
+        };
+
+
+        $scope.count = 5;
+        $scope.username = "";
+        countdown();
     };
 
 
     angular.module("githubViewer", [])
-        .controller("MainController", ["$scope", "$http", "$log", MainController]);
+        .controller("MainController", ["$scope", "$http", "$log", "$interval","$location","$anchorScroll", MainController]);
 
 
 
